@@ -1,0 +1,80 @@
+package ${package.Controller};
+
+import com.hl.yyx.common.api.CommonResult;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+
+import ${package.Service}.${table.serviceName};
+import ${package.Entity}.${entity};
+
+#if(${restControllerStyle})
+import org.springframework.web.bind.annotation.RestController;
+#else
+import org.springframework.stereotype.Controller;
+#end
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+
+/**
+ * <p>
+ * $!{table.comment} 前端控制器
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+#if(${kotlin})
+class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
+
+#else
+    #if(${superControllerClass})
+    public class ${table.controllerName} extends ${superControllerClass} {
+    #else
+    public class ${table.controllerName} {
+    #end
+
+@Autowired
+private ${table.serviceName} ${table.entityPath}Service;
+
+// 新增
+@RequestMapping(value = "/create", method = RequestMethod.POST)
+public CommonResult save(@RequestBody ${entity} ${table.entityPath}){
+        return CommonResult.success(${table.entityPath}Service.save(${table.entityPath}));
+        }
+
+// 更新
+@RequestMapping(value = "/update", method = RequestMethod.POST)
+public CommonResult update(@RequestBody ${entity} ${table.entityPath}){
+        return CommonResult.success(${table.entityPath}Service.updateById(${table.entityPath}));
+        }
+
+// 删除
+@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+public CommonResult delete(@PathVariable String id){
+        return CommonResult.success( ${table.entityPath}Service.removeById(id));
+        }
+
+// 获取全部
+@RequestMapping(value = "/list", method = RequestMethod.GET)
+public CommonResult list(){
+        return CommonResult.success(${table.entityPath}Service.list());
+        }
+
+// 查看
+@RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
+public CommonResult findOne(@PathVariable String id){
+        return CommonResult.success(${table.entityPath}Service.getById(id));
+        }
+
+        }
+
+#end
