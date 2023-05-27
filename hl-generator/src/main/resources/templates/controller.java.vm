@@ -1,6 +1,6 @@
 package ${package.Controller};
 
-import com.hl.yyx.common.api.CommonResult;
+import cn.hl.common.api.CommonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,36 +45,36 @@ class ${table.controllerName}#if(${superControllerClass}) : ${superControllerCla
 @Autowired
 private ${table.serviceName} ${table.entityPath}Service;
 
-// 新增
-@RequestMapping(value = "/create", method = RequestMethod.POST)
-public CommonResult save(@RequestBody ${entity} ${table.entityPath}){
+    // 新增
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public CommonResult save(@RequestBody ${entity} ${table.entityPath}){
         return CommonResult.success(${table.entityPath}Service.save(${table.entityPath}));
-        }
+    }
 
-// 更新
-@RequestMapping(value = "/update", method = RequestMethod.POST)
-public CommonResult update(@RequestBody ${entity} ${table.entityPath}){
+    // 更新
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public CommonResult update(@RequestBody ${entity} ${table.entityPath}){
         return CommonResult.success(${table.entityPath}Service.updateById(${table.entityPath}));
-        }
+    }
 
-// 删除
-@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-public CommonResult delete(@PathVariable String id){
+    // 删除
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public CommonResult delete(@PathVariable String id){
         return CommonResult.success( ${table.entityPath}Service.removeById(id));
-        }
+    }
 
-// 获取全部
-@RequestMapping(value = "/list", method = RequestMethod.GET)
-public CommonResult list(){
+    // 获取全部
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public CommonResult list(){
         return CommonResult.success(${table.entityPath}Service.list());
-        }
+    }
 
-// 查看
-@RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
-public CommonResult findOne(@PathVariable String id){
+    // 查看
+    @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
+    public CommonResult findOne(@PathVariable String id){
         return CommonResult.success(${table.entityPath}Service.getById(id));
-        }
+    }
 
-        }
+}
 
 #end

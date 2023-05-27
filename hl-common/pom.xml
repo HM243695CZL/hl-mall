@@ -12,5 +12,13 @@
     <artifactId>hl-common</artifactId>
     <name>公共模块</name>
 
+    <dependencies>
+        <dependency>
+            <groupId>cn.hl</groupId>
+            <artifactId>hl-generator</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
+
 
 </project>
