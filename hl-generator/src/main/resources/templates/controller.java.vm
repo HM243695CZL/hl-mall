@@ -36,14 +36,14 @@ import ${superControllerClassPackage};
 class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
 
 #else
-    #if(${superControllerClass})
-    public class ${table.controllerName} extends ${superControllerClass} {
-    #else
-    public class ${table.controllerName} {
-    #end
+#if(${superControllerClass})
+public class ${table.controllerName} extends ${superControllerClass} {
+#else
+public class ${table.controllerName} {
+#end
 
-@Autowired
-private ${table.serviceName} ${table.entityPath}Service;
+    @Autowired
+    private ${table.serviceName} ${table.entityPath}Service;
 
     // 新增
     @RequestMapping(value = "/create", method = RequestMethod.POST)

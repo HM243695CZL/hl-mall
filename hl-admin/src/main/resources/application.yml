@@ -11,6 +11,8 @@ mybatis-plus:
     db-config:
       id-type: assign_uuid
       update-strategy: ignored
+      logic-delete-value: 1
+      logic-not-delete-value: 0
   configuration:
     auto-mapping-behavior: partial
     map-underscore-to-camel-case: true
