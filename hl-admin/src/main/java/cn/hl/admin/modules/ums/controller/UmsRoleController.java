@@ -1,7 +1,10 @@
 package cn.hl.admin.modules.ums.controller;
 
+import cn.hl.admin.modules.ums.dto.RolePageDTO;
+import cn.hl.common.api.CommonPage;
 import cn.hl.common.api.CommonResult;
 import cn.hl.common.log.LogAnnotation;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,15 @@ public class UmsRoleController {
 
     @Autowired
     private UmsRoleService umsRoleService;
+
+    // 分页
+    @LogAnnotation
+    @ApiOperation("分页查询")
+    @RequestMapping(value = "/page", method = RequestMethod.POST)
+    public CommonResult page(@RequestBody RolePageDTO pageDTO) {
+       Page<UmsRole> roleList = umsRoleService.pageList(pageDTO);
+       return CommonResult.success(CommonPage.restPage(roleList));
+    }
 
     // 新增
     @LogAnnotation

@@ -1,6 +1,7 @@
 package cn.hl.admin.modules.ums.model;
 
 import cn.hl.admin.model.BaseModel;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
 import java.io.Serializable;
@@ -28,12 +29,15 @@ public class UmsRole extends BaseModel {
     private String id;
 
     @ApiModelProperty(value = "角色名称")
+    @TableField("`name`")
     private String name;
 
     @ApiModelProperty(value = "角色key")
+    @TableField("`key`")
     private String key;
 
     @ApiModelProperty(value = "角色描述")
+    @TableField("`desc`")
     private String desc;
 
     @ApiModelProperty(value = "是否启用")
