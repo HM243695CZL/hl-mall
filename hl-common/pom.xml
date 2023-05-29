@@ -18,27 +18,21 @@
             <artifactId>hl-generator</artifactId>
             <version>1.0</version>
         </dependency>
-        <!--Swagger-UI API文档生产工具-->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>${swagger2.version}</version>
+            <version>${swagger.version}</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-            <version>${swagger2.version}</version>
+            <version>${swagger.version}</version>
         </dependency>
-        <!--解决Swagger 2.9.2版本NumberFormatException-->
+        <!--swagger增强版依赖  访问：http://localhost:9092/doc.html(ip+端口+doc.html)-->
         <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-models</artifactId>
-            <version>${swagger-models.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <version>${swagger-annotations.version}</version>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <version>${knife4j.version}</version>
         </dependency>
     </dependencies>
 
