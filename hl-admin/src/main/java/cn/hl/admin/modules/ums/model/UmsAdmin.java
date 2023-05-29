@@ -9,8 +9,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 /**
  * <p>
@@ -28,7 +26,6 @@ public class UmsAdmin extends BaseModel {
 
     private static final long serialVersionUID=1L;
 
-    @ApiModelProperty(hidden = true)
     private String id;
 
     @ApiModelProperty(value = "管理员名称")
