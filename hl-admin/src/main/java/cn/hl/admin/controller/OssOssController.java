@@ -1,5 +1,6 @@
 package cn.hl.admin.controller;
 
+import cn.hl.common.log.LogAnnotation;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "oss", description = "oss")
 public class OssOssController {
 
+    @LogAnnotation
     @ApiOperation("hello测试")
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public String hello() {

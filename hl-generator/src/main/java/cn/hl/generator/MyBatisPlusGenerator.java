@@ -1,4 +1,4 @@
-package com.hl.yyx.generator;
+package cn.hl.generator;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.dialect.Props;
