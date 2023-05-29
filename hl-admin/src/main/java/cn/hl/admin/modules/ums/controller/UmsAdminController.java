@@ -14,6 +14,8 @@ import cn.hl.admin.modules.ums.model.UmsAdmin;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 /**
  * <p>
  * 管理员表 前端控制器
@@ -34,7 +36,7 @@ public class UmsAdminController {
     @LogAnnotation
     @ApiOperation("新增用户")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public CommonResult save(@RequestBody UmsAdmin umsAdmin){
+    public CommonResult save(@Valid @RequestBody UmsAdmin umsAdmin){
         return CommonResult.success(umsAdminService.save(umsAdmin));
     }
 
