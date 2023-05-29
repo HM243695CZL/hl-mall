@@ -1,6 +1,8 @@
 package cn.hl.admin.modules.ums.controller;
 
 import cn.hl.admin.modules.ums.dto.RolePageDTO;
+import cn.hl.admin.modules.ums.model.UmsRole;
+import cn.hl.admin.modules.ums.service.UmsRoleService;
 import cn.hl.common.api.CommonPage;
 import cn.hl.common.api.CommonResult;
 import cn.hl.common.log.LogAnnotation;
@@ -8,14 +10,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.*;
-
-import cn.hl.admin.modules.ums.service.UmsRoleService;
-import cn.hl.admin.modules.ums.model.UmsRole;
-
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
