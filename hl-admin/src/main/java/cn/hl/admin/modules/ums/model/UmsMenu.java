@@ -1,7 +1,10 @@
 package cn.hl.admin.modules.ums.model;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.util.List;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -61,5 +64,16 @@ public class UmsMenu implements Serializable {
     @ApiModelProperty(value = "排序")
     private Integer sort;
 
+    @ApiModelProperty(value = "角色id列表")
+    @TableField(exist = false)
+    private List<String> roleIds;
+
+    @ApiModelProperty(value = "角色key列表")
+    @TableField(exist = false)
+    private List<String> roles;
+
+    @ApiModelProperty(value = "子菜单")
+    @TableField(exist = false)
+    private List<UmsMenu> children;
 
 }

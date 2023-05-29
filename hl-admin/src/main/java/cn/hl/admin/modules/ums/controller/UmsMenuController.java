@@ -59,7 +59,7 @@ public class UmsMenuController {
     @ApiOperation("获取全部菜单")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public CommonResult list(){
-        return CommonResult.success(umsMenuService.list());
+        return CommonResult.success(umsMenuService.getMenuList());
     }
 
     // 查看
