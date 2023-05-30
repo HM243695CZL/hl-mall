@@ -1,9 +1,12 @@
 package cn.hl.admin.modules.ums.controller;
 
+import cn.hl.admin.modules.ums.dto.PageRoleDTO;
 import cn.hl.admin.modules.ums.model.UmsRole;
 import cn.hl.admin.modules.ums.service.UmsRoleService;
+import cn.hl.common.api.CommonPage;
 import cn.hl.common.api.CommonResult;
 import cn.hl.common.log.LogAnnotation;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +32,9 @@ public class UmsRoleController {
     @LogAnnotation
     @ApiOperation("分页查询")
     @RequestMapping(value = "/page", method = RequestMethod.POST)
-    public CommonResult page() {
-        return null;
+    public CommonResult page(@RequestBody PageRoleDTO roleDTO) throws IllegalAccessException {
+        Page<UmsRole> roleList = umsRoleService.pageList(roleDTO);
+        return CommonResult.success(CommonPage.restPage(roleList));
     }
 
     // 新增
