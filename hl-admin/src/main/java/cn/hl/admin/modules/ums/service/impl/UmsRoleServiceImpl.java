@@ -27,9 +27,9 @@ public class UmsRoleServiceImpl extends ServiceImpl<UmsRoleMapper, UmsRole> impl
         QueryWrapper<UmsRole> queryWrapper = new QueryWrapper<>();
         FilterUtil.convertQuery(queryWrapper, roleDTO);
         Page<UmsRole> page = new Page<>(roleDTO.getPageIndex(), roleDTO.getPageSize());
-//        int count = count(queryWrapper);
         Page<UmsRole> roleList = page(page, queryWrapper);
-//        roleList.setTotal(count);
+        int count = count(queryWrapper);
+        roleList.setTotal(count);
         return roleList;
     }
 }
