@@ -1,10 +1,8 @@
 package cn.hl.admin.modules.ums.model;
 
-import cn.hl.admin.model.BaseModel;
+import cn.hl.common.model.BaseModel;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.util.Date;
-import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

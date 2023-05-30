@@ -1,4 +1,4 @@
-package cn.hl.admin.model;
+package cn.hl.common.model;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;

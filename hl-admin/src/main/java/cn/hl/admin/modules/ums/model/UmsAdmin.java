@@ -1,6 +1,6 @@
 package cn.hl.admin.modules.ums.model;
 
-import cn.hl.admin.model.BaseModel;
+import cn.hl.common.model.BaseModel;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
 import io.swagger.annotations.ApiModel;

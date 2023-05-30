@@ -1,8 +1,6 @@
 package cn.hl.admin.modules.ums.service;
 
-import cn.hl.admin.modules.ums.dto.RolePageDTO;
 import cn.hl.admin.modules.ums.model.UmsRole;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -15,5 +13,4 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UmsRoleService extends IService<UmsRole> {
 
-    Page<UmsRole> pageList(RolePageDTO pageDTO);
 }

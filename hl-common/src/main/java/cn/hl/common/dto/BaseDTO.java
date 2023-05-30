@@ -1,4 +1,4 @@
-package cn.hl.admin.dto;
+package cn.hl.common.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
