@@ -1,6 +1,7 @@
 package cn.hl.admin.modules.ums.controller;
 
 import cn.hl.admin.modules.ums.dto.AdminPageDTO;
+import cn.hl.admin.modules.ums.dto.AllocationRoleDTO;
 import cn.hl.common.api.CommonPage;
 import cn.hl.common.api.CommonResult;
 import cn.hl.common.log.LogAnnotation;
@@ -82,6 +83,14 @@ public class UmsAdminController {
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public CommonResult findOne(@PathVariable String id){
         return CommonResult.success(umsAdminService.getById(id));
+    }
+
+    // 分配角色
+    @LogAnnotation
+    @ApiOperation("分配角色")
+    @RequestMapping(value = "/allocationRole", method = RequestMethod.POST)
+    public CommonResult allocationRole(@RequestBody AllocationRoleDTO allocationRoleDTO) {
+        return CommonResult.success(umsAdminService.allocationRole(allocationRoleDTO));
     }
 
 }
