@@ -1,7 +1,7 @@
 package cn.hl.admin.modules.ums.service.impl;
 
 import cn.hl.admin.modules.ums.dto.AuthMenuDTO;
-import cn.hl.admin.modules.ums.dto.PageRoleDTO;
+import cn.hl.admin.modules.ums.dto.RolePageDTO;
 import cn.hl.admin.modules.ums.mapper.UmsRoleMapper;
 import cn.hl.admin.modules.ums.model.UmsRole;
 import cn.hl.admin.modules.ums.model.UmsRoleMenu;
@@ -35,13 +35,12 @@ public class UmsRoleServiceImpl extends ServiceImpl<UmsRoleMapper, UmsRole> impl
     private UmsRoleMenuService roleMenuService;
 
     @Override
-    public Page<UmsRole> pageList(PageRoleDTO roleDTO) throws IllegalAccessException {
+    public Page<UmsRole> pageList(RolePageDTO roleDTO) throws IllegalAccessException {
         QueryWrapper<UmsRole> queryWrapper = new QueryWrapper<>();
         FilterUtil.convertQuery(queryWrapper, roleDTO);
         Page<UmsRole> page = new Page<>(roleDTO.getPageIndex(), roleDTO.getPageSize());
         Page<UmsRole> roleList = page(page, queryWrapper);
-        int count = count(queryWrapper);
-        roleList.setTotal(count);
+        roleList.setTotal(count(queryWrapper));
         return roleList;
     }
 

@@ -6,7 +6,7 @@ import lombok.Data;
 
 
 @Data
-public class BaseDTO {
+public class BasePageDTO {
 
     @ApiModelProperty(value = "页码")
     private Integer pageIndex;

@@ -1,7 +1,7 @@
 package cn.hl.admin.modules.ums.controller;
 
 import cn.hl.admin.modules.ums.dto.AuthMenuDTO;
-import cn.hl.admin.modules.ums.dto.PageRoleDTO;
+import cn.hl.admin.modules.ums.dto.RolePageDTO;
 import cn.hl.admin.modules.ums.model.UmsRole;
 import cn.hl.admin.modules.ums.service.UmsRoleService;
 import cn.hl.common.api.CommonPage;
@@ -35,7 +35,7 @@ public class UmsRoleController {
     @LogAnnotation
     @ApiOperation("分页查询")
     @RequestMapping(value = "/page", method = RequestMethod.POST)
-    public CommonResult page(@RequestBody PageRoleDTO roleDTO) throws IllegalAccessException {
+    public CommonResult page(@RequestBody RolePageDTO roleDTO) throws IllegalAccessException {
         Page<UmsRole> roleList = umsRoleService.pageList(roleDTO);
         return CommonResult.success(CommonPage.restPage(roleList));
     }

@@ -1,7 +1,7 @@
 package cn.hl.admin.modules.ums.service;
 
 import cn.hl.admin.modules.ums.dto.AuthMenuDTO;
-import cn.hl.admin.modules.ums.dto.PageRoleDTO;
+import cn.hl.admin.modules.ums.dto.RolePageDTO;
 import cn.hl.admin.modules.ums.model.UmsRole;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -18,7 +18,7 @@ import java.util.List;
  */
 public interface UmsRoleService extends IService<UmsRole> {
 
-    Page<UmsRole> pageList(PageRoleDTO roleDTO) throws IllegalAccessException;
+    Page<UmsRole> pageList(RolePageDTO roleDTO) throws IllegalAccessException;
 
     /**
      * 根据角色id查询已分配的权限

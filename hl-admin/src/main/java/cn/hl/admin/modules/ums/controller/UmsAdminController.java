@@ -1,7 +1,10 @@
 package cn.hl.admin.modules.ums.controller;
 
+import cn.hl.admin.modules.ums.dto.AdminPageDTO;
+import cn.hl.common.api.CommonPage;
 import cn.hl.common.api.CommonResult;
 import cn.hl.common.log.LogAnnotation;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +35,21 @@ public class UmsAdminController {
     @Autowired
     private UmsAdminService umsAdminService;
 
+    // 分页
+    @LogAnnotation
+    @ApiOperation("分页查询")
+    @RequestMapping(value = "/page", method = RequestMethod.POST)
+    public CommonResult page(@RequestBody AdminPageDTO pageDTO) throws IllegalAccessException {
+        Page<UmsAdmin> adminList = umsAdminService.pageList(pageDTO);
+        return CommonResult.success(CommonPage.restPage(adminList));
+    }
+
     // 新增
     @LogAnnotation
     @ApiOperation("新增用户")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public CommonResult save(@Valid @RequestBody UmsAdmin umsAdmin){
-        return CommonResult.success(umsAdminService.save(umsAdmin));
+        return CommonResult.success(umsAdminService.create(umsAdmin));
     }
 
     // 更新
