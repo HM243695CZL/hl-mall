@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 29/05/2023 17:54:24
+ Date: 02/06/2023 17:19:59
 */
 
 SET NAMES utf8mb4;
@@ -39,6 +39,7 @@ CREATE TABLE `ums_admin`  (
 -- ----------------------------
 -- Records of ums_admin
 -- ----------------------------
+INSERT INTO `ums_admin` VALUES ('8c2bf63982c58f7e43f14c6ddcb08581', 'admin', '123456', 0, NULL, '', NULL, '', '2023-06-02 13:08:03', '2023-06-02 13:08:03', 0);
 
 -- ----------------------------
 -- Table structure for ums_admin_role
@@ -54,6 +55,7 @@ CREATE TABLE `ums_admin_role`  (
 -- ----------------------------
 -- Records of ums_admin_role
 -- ----------------------------
+INSERT INTO `ums_admin_role` VALUES ('cc68f1f22b7b1f0b5b2b89b830b5561b', '8c2bf63982c58f7e43f14c6ddcb08581', '57db19fa5d18da3bc2c2e20852aa08ac');
 
 -- ----------------------------
 -- Table structure for ums_menu
@@ -104,6 +106,8 @@ CREATE TABLE `ums_role`  (
 -- ----------------------------
 -- Records of ums_role
 -- ----------------------------
+INSERT INTO `ums_role` VALUES ('57db19fa5d18da3bc2c2e20852aa08ac', '管理员', 'admin', '拥有所有权限', 1, '2023-05-30 14:20:02', '2023-05-30 14:20:02', 0);
+INSERT INTO `ums_role` VALUES ('b206d1772af2a8e11e60100bb6a4ca44', '11111', '222', '33', 1, '2023-05-30 19:41:51', '2023-05-30 19:41:51', 1);
 
 -- ----------------------------
 -- Table structure for ums_role_menu
@@ -119,5 +123,6 @@ CREATE TABLE `ums_role_menu`  (
 -- ----------------------------
 -- Records of ums_role_menu
 -- ----------------------------
+INSERT INTO `ums_role_menu` VALUES ('da38ae230faa5735f54c442eb5ad2bb3', '57db19fa5d18da3bc2c2e20852aa08ac', '2bd76aa9d67c8757d63df4a23f2e8c20');
 
 SET FOREIGN_KEY_CHECKS = 1;
