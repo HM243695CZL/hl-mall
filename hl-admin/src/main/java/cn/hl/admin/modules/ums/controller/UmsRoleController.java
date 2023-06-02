@@ -1,5 +1,6 @@
 package cn.hl.admin.modules.ums.controller;
 
+import cn.hl.admin.modules.ums.dto.AuthMenuDTO;
 import cn.hl.admin.modules.ums.dto.PageRoleDTO;
 import cn.hl.admin.modules.ums.model.UmsRole;
 import cn.hl.admin.modules.ums.service.UmsRoleService;
@@ -11,6 +12,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -43,6 +46,23 @@ public class UmsRoleController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public CommonResult save(@RequestBody UmsRole umsRole){
         return CommonResult.success(umsRoleService.save(umsRole));
+    }
+
+    // 获取角色已分配的权限
+    @LogAnnotation
+    @ApiOperation("获取已分配的权限")
+    @RequestMapping(value = "/viewAuth/{id}", method = RequestMethod.GET)
+    public CommonResult viewAuth(@PathVariable String id) {
+        List<String> menuIds = umsRoleService.viewAuth(id);
+        return CommonResult.success(menuIds);
+    }
+
+    // 分配权限
+    @LogAnnotation
+    @ApiOperation("分配权限")
+    @RequestMapping(value = "/auth", method = RequestMethod.POST)
+    public CommonResult authMenu(@RequestBody AuthMenuDTO authMenuDTO) {
+        return CommonResult.success(umsRoleService.authMenu(authMenuDTO));
     }
 
     // 更新
