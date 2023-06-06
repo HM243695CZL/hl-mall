@@ -2,9 +2,13 @@ package cn.hl.admin.modules.ums.service;
 
 import cn.hl.admin.modules.ums.dto.AdminPageDTO;
 import cn.hl.admin.modules.ums.dto.AllocationRoleDTO;
+import cn.hl.admin.modules.ums.dto.LoginParamDTO;
 import cn.hl.admin.modules.ums.model.UmsAdmin;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
@@ -26,4 +30,14 @@ public interface UmsAdminService extends IService<UmsAdmin> {
      * @return
      */
     Boolean allocationRole(AllocationRoleDTO allocationRoleDTO);
+
+    /**
+     * 登录
+     * @param loginParamDTO
+     * @param request
+     * @return
+     */
+    String login(LoginParamDTO loginParamDTO, HttpServletRequest request);
+
+    UserDetails loadUserByUsername(String username);
 }

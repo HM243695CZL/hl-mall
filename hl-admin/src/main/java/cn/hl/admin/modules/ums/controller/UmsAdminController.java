@@ -2,6 +2,7 @@ package cn.hl.admin.modules.ums.controller;
 
 import cn.hl.admin.modules.ums.dto.AdminPageDTO;
 import cn.hl.admin.modules.ums.dto.AllocationRoleDTO;
+import cn.hl.admin.modules.ums.dto.LoginParamDTO;
 import cn.hl.common.api.CommonPage;
 import cn.hl.common.api.CommonResult;
 import cn.hl.common.log.LogAnnotation;
@@ -18,6 +19,7 @@ import cn.hl.admin.modules.ums.model.UmsAdmin;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -91,6 +93,14 @@ public class UmsAdminController {
     @RequestMapping(value = "/allocationRole", method = RequestMethod.POST)
     public CommonResult allocationRole(@RequestBody AllocationRoleDTO allocationRoleDTO) {
         return CommonResult.success(umsAdminService.allocationRole(allocationRoleDTO));
+    }
+
+    // 登录
+    @LogAnnotation
+    @ApiOperation("登录")
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public CommonResult login(@RequestBody LoginParamDTO loginParamDTO, HttpServletRequest request) {
+        return CommonResult.success(umsAdminService.login(loginParamDTO, request));
     }
 
 }

@@ -17,3 +17,25 @@ mybatis-plus:
     auto-mapping-behavior: partial
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: mall-admin-secret #JWT加解密使用的密钥
+  expiration: 604800 #JWT的超期限时间(60*60*24*7)
+  tokenHead: 'Bearer '  #JWT负载中拿到开头
+
+secure:
+  ignored:
+    urls: #安全路径白名单
+      - /doc.html
+      - /admin/admin/login
+      - /**/swagger-ui.html
+      - /**/swagger-resources/**
+      - /**/swagger-ui/index.html
+      - /**/swagger/**
+      - /**/v*/api-docs
+      - /**/*.js
+      - /**/*.css
+      - /**/*.png
+      - /**/*.ico
+      - /webjars/springfox-swagger-ui/**
