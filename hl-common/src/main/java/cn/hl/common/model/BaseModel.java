@@ -23,7 +23,7 @@ public class BaseModel implements Serializable {
     private Date updateTime;
 
     @ApiModelProperty(value = "逻辑删除", hidden = true)
-    @TableLogic(value = "0", delval = "1")
+//    @TableLogic(value = "0", delval = "1")
     @JsonIgnore
     private Boolean deleted;
 }

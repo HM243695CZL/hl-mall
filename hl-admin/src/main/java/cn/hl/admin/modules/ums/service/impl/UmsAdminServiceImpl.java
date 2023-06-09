@@ -139,12 +139,14 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper, UmsAdmin> i
     }
 
     /**
-     * 更新用户给
+     * 更新用户
      * @param umsAdmin
      * @return
      */
     @Override
     public Boolean updateAdmin(UmsAdmin umsAdmin) {
+        UmsAdmin admin = getById(umsAdmin.getId());
+        umsAdmin.setPassword(admin.getPassword());
         boolean result = updateById(umsAdmin);
         // 清空当前用户所有角色
         QueryWrapper<UmsAdminRole> queryWrapper = new QueryWrapper<>();

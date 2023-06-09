@@ -28,4 +28,6 @@ public interface UmsMenuService extends IService<UmsMenu> {
      * @return
      */
     List<InitMenuDTO> getMenuListByUserId(String id);
+
+    Boolean delete(String id);
 }

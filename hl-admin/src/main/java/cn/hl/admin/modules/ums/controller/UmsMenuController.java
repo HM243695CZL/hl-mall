@@ -51,7 +51,7 @@ public class UmsMenuController {
     @ApiOperation("删除菜单")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public CommonResult delete(@PathVariable String id){
-        return CommonResult.success( umsMenuService.removeById(id));
+        return CommonResult.success( umsMenuService.delete(id));
     }
 
     // 获取全部

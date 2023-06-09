@@ -10,7 +10,7 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: assign_uuid
-      update-strategy: ignored
+      update-strategy: not_null
       logic-delete-value: 1
       logic-not-delete-value: 0
   configuration:
