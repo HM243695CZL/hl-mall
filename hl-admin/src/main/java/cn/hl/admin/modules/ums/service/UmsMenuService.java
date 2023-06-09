@@ -1,5 +1,6 @@
 package cn.hl.admin.modules.ums.service;
 
+import cn.hl.admin.modules.ums.dto.InitMenuDTO;
 import cn.hl.admin.modules.ums.model.UmsMenu;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -20,4 +21,11 @@ public interface UmsMenuService extends IService<UmsMenu> {
      * @return
      */
     List<UmsMenu> getMenuList();
+
+    /**
+     * 根据用户id获取用户菜单
+     * @param id
+     * @return
+     */
+    List<InitMenuDTO> getMenuListByUserId(String id);
 }

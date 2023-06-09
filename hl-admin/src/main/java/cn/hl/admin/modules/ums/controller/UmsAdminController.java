@@ -2,7 +2,11 @@ package cn.hl.admin.modules.ums.controller;
 
 import cn.hl.admin.modules.ums.dto.AdminPageDTO;
 import cn.hl.admin.modules.ums.dto.AllocationRoleDTO;
+import cn.hl.admin.modules.ums.dto.InitMenuDTO;
 import cn.hl.admin.modules.ums.dto.LoginParamDTO;
+import cn.hl.admin.modules.ums.model.UmsAdmin;
+import cn.hl.admin.modules.ums.service.UmsAdminService;
+import cn.hl.admin.modules.ums.service.UmsMenuService;
 import cn.hl.common.api.CommonPage;
 import cn.hl.common.api.CommonResult;
 import cn.hl.common.log.LogAnnotation;
@@ -10,17 +14,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.*;
-
-import cn.hl.admin.modules.ums.service.UmsAdminService;
-import cn.hl.admin.modules.ums.model.UmsAdmin;
-
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * <p>
@@ -37,6 +36,9 @@ public class UmsAdminController {
 
     @Autowired
     private UmsAdminService umsAdminService;
+
+    @Autowired
+    private UmsMenuService menuService;
 
     // 分页
     @LogAnnotation
@@ -100,7 +102,14 @@ public class UmsAdminController {
     @ApiOperation("登录")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public CommonResult login(@RequestBody LoginParamDTO loginParamDTO, HttpServletRequest request) {
-        return CommonResult.success(umsAdminService.login(loginParamDTO, request));
+        String token = umsAdminService.login(loginParamDTO, request);
+        UmsAdmin userInfo = umsAdminService.getCurrentAdmin();
+        List<InitMenuDTO> menuList = menuService.getMenuListByUserId(userInfo.getId());
+        HashMap<String, Object> tokenMap = new HashMap<>();
+        tokenMap.put("token", token);
+        tokenMap.put("userInfo", userInfo);
+        tokenMap.put("menuList", menuList);
+        return CommonResult.success(tokenMap);
     }
 
 }

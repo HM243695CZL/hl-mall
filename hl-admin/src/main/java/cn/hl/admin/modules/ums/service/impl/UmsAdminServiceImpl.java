@@ -1,6 +1,6 @@
 package cn.hl.admin.modules.ums.service.impl;
 
-import cn.hl.admin.modules.domain.AdminUserDetails;
+import cn.hl.admin.domain.AdminUserDetails;
 import cn.hl.admin.modules.ums.dto.AdminPageDTO;
 import cn.hl.admin.modules.ums.dto.AllocationRoleDTO;
 import cn.hl.admin.modules.ums.dto.LoginParamDTO;
@@ -14,12 +14,15 @@ import cn.hl.common.constants.Constants;
 import cn.hl.common.exception.ApiException;
 import cn.hl.common.exception.Asserts;
 import cn.hl.common.filter.FilterUtil;
+import cn.hl.common.utils.IpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -27,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -98,16 +102,26 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper, UmsAdmin> i
             SecurityContextHolder.getContext().setAuthentication(authentication);
             token = jwtTokenUtil.generateToken(userDetails);
             // 更新上次登录时间和登录ip
-//            UmsAdmin currentAdmin = getCurrentAdmin();
-//            UpdateWrapper<UmsAdmin> updateWrapper = new UpdateWrapper<>();
-//            updateWrapper.lambda().eq(UmsAdmin::getId, currentAdmin.getId());
-//            updateWrapper.set("last_login_ip", IpUtil.getIpAddr(request));
-//            updateWrapper.set("last_login_time", new Date());
-//            update(updateWrapper);
+            UmsAdmin currentAdmin = getCurrentAdmin();
+            UpdateWrapper<UmsAdmin> updateWrapper = new UpdateWrapper<>();
+            updateWrapper.lambda().eq(UmsAdmin::getId, currentAdmin.getId());
+            updateWrapper.set("last_login_ip", IpUtil.getIpAddr(request));
+            updateWrapper.set("last_login_time", new Date());
+            update(updateWrapper);
         } catch (AuthenticationException e) {
             log.warn("登录异常：{}", e.getMessage());
         }
         return token;
+    }
+
+    /**
+     * 获取当前用户
+     * @return
+     */
+    public UmsAdmin getCurrentAdmin() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        AdminUserDetails admin = (AdminUserDetails) authentication.getPrincipal();
+        return admin.getUmsAdmin();
     }
 
     /**

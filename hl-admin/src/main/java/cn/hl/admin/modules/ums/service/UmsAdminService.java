@@ -40,4 +40,6 @@ public interface UmsAdminService extends IService<UmsAdmin> {
     String login(LoginParamDTO loginParamDTO, HttpServletRequest request);
 
     UserDetails loadUserByUsername(String username);
+
+    UmsAdmin getCurrentAdmin();
 }
