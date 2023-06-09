@@ -33,4 +33,6 @@ public interface UmsRoleService extends IService<UmsRole> {
      * @return
      */
     Boolean authMenu(AuthMenuDTO authMenuDTO);
+
+    Boolean delete(String id);
 }

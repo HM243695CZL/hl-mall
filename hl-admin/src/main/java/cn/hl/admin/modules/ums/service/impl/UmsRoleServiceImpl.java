@@ -3,8 +3,10 @@ package cn.hl.admin.modules.ums.service.impl;
 import cn.hl.admin.modules.ums.dto.AuthMenuDTO;
 import cn.hl.admin.modules.ums.dto.RolePageDTO;
 import cn.hl.admin.modules.ums.mapper.UmsRoleMapper;
+import cn.hl.admin.modules.ums.model.UmsAdminRole;
 import cn.hl.admin.modules.ums.model.UmsRole;
 import cn.hl.admin.modules.ums.model.UmsRoleMenu;
+import cn.hl.admin.modules.ums.service.UmsAdminRoleService;
 import cn.hl.admin.modules.ums.service.UmsRoleMenuService;
 import cn.hl.admin.modules.ums.service.UmsRoleService;
 import cn.hl.common.filter.FilterUtil;
@@ -33,6 +35,9 @@ public class UmsRoleServiceImpl extends ServiceImpl<UmsRoleMapper, UmsRole> impl
 
     @Autowired
     private UmsRoleMenuService roleMenuService;
+
+    @Autowired
+    private UmsAdminRoleService adminRoleService;
 
     @Override
     public Page<UmsRole> pageList(RolePageDTO roleDTO) throws IllegalAccessException {
@@ -71,6 +76,26 @@ public class UmsRoleServiceImpl extends ServiceImpl<UmsRoleMapper, UmsRole> impl
 
         List<UmsRoleMenu> roleMenuList = setRoleAndMenuRelation(authMenuDTO.getMenuIds(), authMenuDTO.getId());
         return roleMenuService.saveBatch(roleMenuList);
+    }
+
+    /**
+     * 删除角色
+     * @param id
+     * @return
+     */
+    @Transactional
+    @Override
+    public Boolean delete(String id) {
+        // 删除用户角色表的角色
+        QueryWrapper<UmsAdminRole> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(UmsAdminRole::getRoleId, id);
+        adminRoleService.remove(queryWrapper);
+
+        // 删除角色菜单表的对应角色
+        QueryWrapper<UmsRoleMenu> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(UmsRoleMenu::getRoleId, id);
+        roleMenuService.remove(wrapper);
+        return removeById(id);
     }
 
     /**

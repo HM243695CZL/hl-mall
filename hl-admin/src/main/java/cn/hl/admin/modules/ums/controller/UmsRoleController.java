@@ -78,7 +78,7 @@ public class UmsRoleController {
     @ApiOperation("删除角色")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public CommonResult delete(@PathVariable String id){
-        return CommonResult.success( umsRoleService.removeById(id));
+        return CommonResult.success( umsRoleService.delete(id));
     }
 
     // 获取全部
