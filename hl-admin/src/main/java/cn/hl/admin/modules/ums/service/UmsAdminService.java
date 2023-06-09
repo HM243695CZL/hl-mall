@@ -42,4 +42,10 @@ public interface UmsAdminService extends IService<UmsAdmin> {
     UserDetails loadUserByUsername(String username);
 
     UmsAdmin getCurrentAdmin();
+
+    Boolean updateAdmin(UmsAdmin umsAdmin);
+
+    UmsAdmin view(String id);
+
+    Boolean delete(String id);
 }

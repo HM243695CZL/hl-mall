@@ -1,4 +1,4 @@
-package cn.hl.admin.modules.domain;
+package cn.hl.admin.domain;
 
 import cn.hl.admin.modules.ums.model.UmsAdmin;
 import org.springframework.security.core.GrantedAuthority;

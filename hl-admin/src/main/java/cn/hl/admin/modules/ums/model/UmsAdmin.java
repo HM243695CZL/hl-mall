@@ -1,8 +1,10 @@
 package cn.hl.admin.modules.ums.model;
 
 import cn.hl.common.model.BaseModel;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
@@ -55,5 +57,14 @@ public class UmsAdmin extends BaseModel {
 
     @ApiModelProperty(value = "头像图片")
     private String avatar;
+
+    @ApiModelProperty(value = "角色名称")
+    @TableField(exist = false)
+    private List<String> roles;
+
+    @ApiModelProperty(value = "角色id列表")
+    @TableField(exist = false)
+    private List<String> roleIds;
+
 
 }

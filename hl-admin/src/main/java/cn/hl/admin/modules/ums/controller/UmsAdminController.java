@@ -62,7 +62,7 @@ public class UmsAdminController {
     @ApiOperation("更新用户")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public CommonResult update(@RequestBody UmsAdmin umsAdmin){
-        return CommonResult.success(umsAdminService.updateById(umsAdmin));
+        return CommonResult.success(umsAdminService.updateAdmin(umsAdmin));
     }
 
     // 删除
@@ -70,7 +70,7 @@ public class UmsAdminController {
     @ApiOperation("删除用户")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public CommonResult delete(@PathVariable String id){
-        return CommonResult.success( umsAdminService.removeById(id));
+        return CommonResult.success( umsAdminService.delete(id));
     }
 
     // 获取全部
@@ -86,7 +86,7 @@ public class UmsAdminController {
     @ApiOperation("查看用户")
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public CommonResult findOne(@PathVariable String id){
-        return CommonResult.success(umsAdminService.getById(id));
+        return CommonResult.success(umsAdminService.view(id));
     }
 
     // 分配角色

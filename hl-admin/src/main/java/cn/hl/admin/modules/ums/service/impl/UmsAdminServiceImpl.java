@@ -7,14 +7,17 @@ import cn.hl.admin.modules.ums.dto.LoginParamDTO;
 import cn.hl.admin.modules.ums.mapper.UmsAdminMapper;
 import cn.hl.admin.modules.ums.model.UmsAdmin;
 import cn.hl.admin.modules.ums.model.UmsAdminRole;
+import cn.hl.admin.modules.ums.model.UmsRole;
 import cn.hl.admin.modules.ums.service.UmsAdminRoleService;
 import cn.hl.admin.modules.ums.service.UmsAdminService;
+import cn.hl.admin.modules.ums.service.UmsRoleService;
 import cn.hl.admin.security.utils.JwtTokenUtil;
 import cn.hl.common.constants.Constants;
 import cn.hl.common.exception.ApiException;
 import cn.hl.common.exception.Asserts;
 import cn.hl.common.filter.FilterUtil;
 import cn.hl.common.utils.IpUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -32,6 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -51,12 +55,18 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper, UmsAdmin> i
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
+    @Autowired
+    private UmsRoleService roleService;
+
     @Transactional
     @Override
     public Boolean create(UmsAdmin umsAdmin) {
         // 设置用户初始密码
         umsAdmin.setPassword(Constants.INIT_PASSWORD);
-        return save(umsAdmin);
+        boolean result = save(umsAdmin);
+        List<UmsAdminRole> adminRoleList = setAdminAndRole(umsAdmin.getRoleIds(), umsAdmin.getId());
+        adminRoleService.saveBatch(adminRoleList);
+        return result;
     }
 
     @Override
@@ -65,6 +75,8 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper, UmsAdmin> i
         FilterUtil.convertQuery(queryWrapper, pageDTO);
         Page<UmsAdmin> page = new Page<>(pageDTO.getPageIndex(), pageDTO.getPageSize());
         Page<UmsAdmin> adminList = page(page, queryWrapper);
+        // 根据用户id获取角色key
+        adminList.getRecords().stream().forEach(this::setUserRoles);
         adminList.setTotal(count(queryWrapper));
         return adminList;
     }
@@ -121,7 +133,70 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper, UmsAdmin> i
     public UmsAdmin getCurrentAdmin() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         AdminUserDetails admin = (AdminUserDetails) authentication.getPrincipal();
-        return admin.getUmsAdmin();
+        UmsAdmin userInfo = admin.getUmsAdmin();
+        setUserRoles(userInfo);
+        return userInfo;
+    }
+
+    /**
+     * 更新用户给
+     * @param umsAdmin
+     * @return
+     */
+    @Override
+    public Boolean updateAdmin(UmsAdmin umsAdmin) {
+        boolean result = updateById(umsAdmin);
+        // 清空当前用户所有角色
+        QueryWrapper<UmsAdminRole> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(UmsAdminRole::getAdminId, umsAdmin.getId());
+        adminRoleService.remove(queryWrapper);
+
+        List<UmsAdminRole> adminRoleList = setAdminAndRole(umsAdmin.getRoleIds(), umsAdmin.getId());
+        adminRoleService.saveBatch(adminRoleList);
+        return result;
+    }
+
+    /**
+     * 查看用户
+     * @param id
+     * @return
+     */
+    @Override
+    public UmsAdmin view(String id) {
+        UmsAdmin admin = getById(id);
+        // 查询用户所有的角色id
+        List<String> roleIds = adminRoleService.list(new QueryWrapper<UmsAdminRole>().eq("admin_id", id))
+                .stream().map(UmsAdminRole::getRoleId).collect(Collectors.toList());
+        admin.setRoleIds(roleIds);
+        return admin;
+    }
+
+    /**
+     * 删除用户
+     * @param id
+     * @return
+     */
+    @Override
+    public Boolean delete(String id) {
+        // 清空当前用户的所有角色
+        QueryWrapper<UmsAdminRole> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(UmsAdminRole::getAdminId, id);
+        adminRoleService.remove(queryWrapper);
+        return removeById(id);
+    }
+
+    /**
+     * 设置用户的roles字段
+     * @param userInfo
+     */
+    private void setUserRoles(UmsAdmin userInfo) {
+        List<String> roleIds = adminRoleService.list(new QueryWrapper<UmsAdminRole>().eq("admin_id", userInfo.getId())
+                .select("role_id")).stream().map(UmsAdminRole::getRoleId).collect(Collectors.toList());
+        if (!ObjectUtil.isEmpty(roleIds)) {
+            // 根据角色表查询对应的角色名称
+            List<String> roleName = roleService.listByIds(roleIds).stream().map(UmsRole::getKey).collect(Collectors.toList());
+            userInfo.setRoles(roleName);
+        }
     }
 
     /**
